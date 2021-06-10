@@ -10,25 +10,29 @@ function urlFor(source){
 }
 
 export default function SinglePost(){
-    const[ singlePost, setSinglePost] = useState(null);
-    const{ slug } = useParams();
+    const [ singlePost, setSinglePost] = useState(null);
+    const { slug } = useParams();
 
     useEffect(() =>{
-        sanityClient.fetch(`*[slug.current == "${slug}"]{
-            title,
-            _id,
-            slug,
-            mainImagen{
+        sanityClient
+         .fetch(
+             `*[slug.current == "${slug}"]{
+              title,
+              _id,
+              slug,
+              mainImage{
                 asset->{
                     _id,
                     url
                 }
             },
             body,
-            "name":author->name,
-            "authoroImage":author->image
-        }`).then((data) => setSinglePost(data[0]))
-           .catch(console.error);
+            "name": author->name,
+            "authorImage": author->image
+        }`
+        )
+        .then((data) => setSinglePost(data[0]))
+        .catch(console.error);
     }, [slug]);
 
     if(!singlePost) return <div>Loading...</div>;
@@ -42,8 +46,9 @@ export default function SinglePost(){
                             <h1 className="cursive text-3xl lg:text-6xl mb-4">
                                 {singlePost.title}
                             </h1>
-                            <div clallName="flex justify-center text-gray-800">
-                                <img src={urlFor(singlePost.authorImage).url()}
+                            <div className="flex justify-center text-gray-800">
+                                <img 
+                                src={urlFor(singlePost.authorImage).url()}
                                 alt={singlePost.name}
                                 className="w-10 h-10 rounded-full"
                                 />
@@ -53,13 +58,14 @@ export default function SinglePost(){
                             </div>
                         </div>
                     </div>
-                    <img src={singlePost.mainImage.asset.url} 
-                    alt={singlePost.title} 
+                    <img 
+                    src={singlePost.mainImage.asset.url} 
+                    alt={singlePost.title}
                     className="w-full object-cover rounded-t" 
                     style={{height:"400px"}}
                     />
                 </header>
-                <div classNam="px-16 lg:px-48 py-12 lg:py-20 prose-xl max-w-full">
+                <div className="px-16 lg:px-48 py-12 lg:py-20 prose-xl max-w-full">
                     <BlockContent 
                     blocks={singlePost.body} 
                     projectId="fhnfq38s" 

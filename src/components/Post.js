@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import sanityClient from "../client.js";
 
 export default function Post() {
-    const[postData, setPost] = useState(null);
+    const [postData, setPost] = useState(null);
 
-    useEffect( () => {
+    useEffect(() => {
         sanityClient
-            .fetch(
-                `*[_type == "post"]{
+          .fetch(
+            `*[_type == "post"]{
                     title,
                     slug,
                     mainImage{
@@ -19,10 +19,10 @@ export default function Post() {
                         alt
                     }
                 }`
-            )
-            .then((data) => setPost(data))
-            .catch(console.error);
-    }, []);
+          )
+          .then((data) => setPost(data))
+          .catch(console.error);
+      }, []);
 
     return (
         <main className="bg-green-100 min-h-screen p-12">
@@ -31,10 +31,10 @@ export default function Post() {
                 <h2 className="text-lg text-gray-600 flax justify-center mb-12">Cuidado para tu piel</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     { postData && 
-                       postData.map( (post, index) => (
+                       postData.map((post, index) => (
                         <article>
                             <Link 
-                            to={"/post/" + post.slug.current} 
+                            to={"/post/" + post.slug.current}
                             key={post.slug.current}
                             >
                             <span className="block h-64 relative rounded shadow leading-snug bg-white border-l-8 border-green-400"

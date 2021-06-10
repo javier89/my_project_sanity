@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import project from "../../ataraxia/schemas/project.js";
 import sanityClient from '../client.js';
 
 export default function Project(){
@@ -7,16 +6,20 @@ export default function Project(){
     const [projectData, setProjectData] = useState(null);
 
     useEffect(() => {
-        sanityClient.fetch(`*[type == project"]{
-            title,
-            date,
-            place,
-            description,
-            projectType,
-            link, 
-            tags
-        }`).then((data) => setProjectData(data))
-           .catch(console.error);
+        sanityClient
+          .fetch(
+              `*[type == project"]{
+               title,
+               date,
+               place,
+               description,
+               projectType,
+               link, 
+               tags
+        }`
+        )
+        .then((data) => setProjectData(data))
+        .catch(console.error);
     }, []);
 
     return (
@@ -27,7 +30,7 @@ export default function Project(){
                     Bienvenidos a la pagina de porjectos
                 </h2>
                 <section className="grid grid-cols-2 gap-8">
-                    {project.Data && projectData.map((project, index)=> (
+                    {projectData && projectData.map((project, index)=> (
                         <article className="relative rounded-lg shadow-xl bg-white p-16">
                             <h3 className="text-gray-800 text-3xl font-bold mb-2 hover:text-red-700">
                                 <a
