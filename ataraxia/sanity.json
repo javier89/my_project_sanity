@@ -1,11 +1,11 @@
 {
   "root": true,
-  "project": {
-    "name": "ataraxia"
-  },
   "api": {
     "projectId": "fhnfq38s",
     "dataset": "production"
+  },
+  "project": {
+    "name": "ataraxia"
   },
   "plugins": [
     "@sanity/base",
